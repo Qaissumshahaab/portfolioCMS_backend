@@ -1,4 +1,4 @@
-import signjwtAccessToken from "../services/loginControllerservice/jwtSignAccesstoken";
+import signjwtAccessToken from "../services/jwtSignAccesstoken";
 import signup from "../model/signup";
 import bcrypt from "bcrypt";
 

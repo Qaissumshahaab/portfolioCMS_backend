@@ -6,6 +6,6 @@ const portfolioSchema = new mongoose.Schema({
     required: true,
   },
 });
-
+// portfolio._id is created by mongodb itself
 const portfolio = mongoose.model("Portfolio", portfolioSchema);
 export default portfolio;

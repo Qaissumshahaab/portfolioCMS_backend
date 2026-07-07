@@ -1,10 +1,11 @@
 import portfolio from "../model/portfolio";
 
 export const createPortfolio = async (req, res, next) => {
-  const userid = req.user.userid;
   try {
-    const portfolio = await portfolio.findById({ userid: userid });
-    if (portfolio) {
+    const userid = req.user?.userid;
+
+    const findportfolio = await portfolio.findOne({ userid: userid });
+    if (findportfolio) {
       return res.status(200).json({
         success: false,
         message: "Portfolio already present you can make only one portfolio",
@@ -13,7 +14,7 @@ export const createPortfolio = async (req, res, next) => {
       const createportfolio = await portfolio.create({
         userid: userid,
       });
-      await createPortfolio.save();
+
       return res
         .status(200)
         .json({ success: true, message: "Start creating your portfolio" });

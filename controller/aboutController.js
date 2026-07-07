@@ -2,25 +2,26 @@ import about from "../model/about";
 import portfolio from "../model/portfolio";
 
 export const createAbout = async (req, res, next) => {
-  const { biography, background, careerGoals, whatIenjoybuilding } = req.body;
-  const userid = req.user.userid;
   try {
-    const portfolio = await portfolio.findOne({ userid: userid });
-    if (!portfolio) {
+    const { biography, background, careerGoals, whatIenjoybuilding } = req.body;
+    const userid = req.user.userid;
+
+    const findportfolio = await portfolio.findOne({ userid: userid });
+    if (!findportfolio) {
       return res
         .status(400)
         .json({ success: false, message: "Portfolio not present" });
     } else {
-      const about = await about.findOne({ portfolioid: portfolio._id });
-      if (!about) {
+      const findabout = await about.findOne({ portfolioid: findportfolio._id });
+      if (!findabout) {
         const createAbout = await about.create({
           biography: biography,
           background: background,
           careerGoals: careerGoals,
           whatIenjoybuilding: whatIenjoybuilding,
-          portfolioid: portfolio._id,
+          portfolioid: findportfolio._id,
         });
-        await createAbout.save();
+
         return res
           .status(200)
           .json({ success: true, message: "About section added successfully" });
@@ -34,7 +35,7 @@ export const createAbout = async (req, res, next) => {
           updateData.whatIenjoybuilding = whatIenjoybuilding;
 
         const updateAbout = await about.findOneAndUpdate(
-          { portfolioid: portfolio._id },
+          { portfolioid: findportfolio._id },
           updateData,
           { new: true },
         );

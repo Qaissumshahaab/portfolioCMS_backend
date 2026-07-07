@@ -11,7 +11,7 @@ const homapageSchema = new mongoose.Schema({
     type: String,
   },
   profilePic: {
-    type: String,
+    type: Object,
   },
   portfolioid: {
     type: mongoose.Schema.Types.ObjectId,

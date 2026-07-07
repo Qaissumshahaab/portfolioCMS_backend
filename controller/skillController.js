@@ -2,26 +2,39 @@ import portfolio from "../model/portfolio";
 import skills from "../model/skills";
 
 export const addSkills = async (req, res, next) => {
-  const { languages, frontendFramework, backendFramework, toolsandecosystem } =
-    req.body;
-  const userid = req.user.userid;
   try {
-    const portfolio = await portfolio.findById({ userid: userid });
-    if (!portfolio) {
+    const {
+      languages,
+      frontendFramework,
+      backendFramework,
+      toolsandecosystem,
+    } = req.body;
+    const userid = req.user.userid;
+
+    const findportfolio = await portfolio.findOne({ userid: userid });
+    if (!findportfolio) {
       return res
         .status(400)
         .json({ success: false, message: "portfolio not present" });
     } else {
-      const skills = await skills.findById({ portfolioid: portfolio._id });
-      if (!skills) {
+      const findskills = await skills.findOne({
+        portfolioid: findportfolio._id,
+      });
+      if (!findskills) {
+        const uniqueLanguages = [...new Set(languages ?? [])]; //if language then language otherwise empty array //new Set() removes duplicates and ?? ensure if languages is not present it become empty array instaed of null or undefind so new Set() does not break. // Set is javascript object that take unique values.
+
+        const uniqueFrontendFramework = [...new Set(frontendFramework ?? [])];
+        const uniqueBackendFramework = [...new Set(backendFramework ?? [])];
+        const uniqueToolsAndEcosystem = [...new Set(toolsandecosystem ?? [])];
+
         const createskills = await skills.create({
-          languages: languages,
-          frontendFramework: frontendFramework,
-          backendFramework: backendFramework,
-          toolsandecosystem: toolsandecosystem,
-          portfolioid: portfolio._id,
+          languages: uniqueLanguages,
+          frontendFramework: uniqueFrontendFramework,
+          backendFramework: uniqueBackendFramework,
+          toolsandecosystem: uniqueToolsAndEcosystem,
+          portfolioid: findportfolio._id,
         });
-        await createskills.save();
+
         return res
           .status(200)
           .json({ success: true, message: "Skills added successfully" });
@@ -32,9 +45,9 @@ export const addSkills = async (req, res, next) => {
           update.languages = { $each: req.body.languages };
         }
 
-        if (req.body.frontendFrameworks?.length) {
-          update.frontendFrameworks = {
-            $each: req.body.frontendFrameworks,
+        if (req.body.frontendFramework?.length) {
+          update.frontendFramework = {
+            $each: req.body.frontendFramework,
           };
         }
 
@@ -51,15 +64,15 @@ export const addSkills = async (req, res, next) => {
         }
 
         const updateskills = await skills.findOneAndUpdate(
-          { portfolioid: portfolio._id },
+          { portfolioid: findportfolio._id },
           {
-            $push: update,
-          },
+            $addToSet: update, // $push does not ensure removing duplicate values in array
+          }, // $addToSet ensure removing any duplicate values in array eg:[java,java]
           { new: true },
         );
         return res
           .status(200)
-          .json({ success: true, message: "Skills added successfully" });
+          .json({ success: true, message: "Skills updated successfully" });
       }
     }
   } catch (error) {
@@ -73,6 +86,6 @@ export const addSkills = async (req, res, next) => {
 front end send skills like this ;
 {
   "languages": ["JavaScript", "Python"],
-  "frontendFrameworks": ["React", "Next.js"]
+  "frontendFramework": ["React", "Next.js"]
 }
   */

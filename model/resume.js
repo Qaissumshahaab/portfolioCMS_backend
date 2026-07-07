@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const resumeSchema = new mongoose.Schema({
-  resume: {
-    type: String,
+  resumePic: {
+    type: Object,
   },
   portfolioid: {
     type: mongoose.Schema.Types.ObjectId,

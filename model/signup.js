@@ -14,6 +14,10 @@ const signupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  refreshToken: {
+    type: String,
+    default: null,
+  },
 });
 
 const signup = mongoose.model("Signup", signupSchema);

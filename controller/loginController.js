@@ -8,7 +8,7 @@ export const loginUser = async (req, res, next) => {
     const email = req.body?.email;
     const password = req.body?.password;
     if (!email || !password) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         message: "Email and password both are required",
       });
@@ -24,24 +24,38 @@ export const loginUser = async (req, res, next) => {
         };
         const accessToken = signjwtAccessToken(userobject);
         const refreshToken = signjwtRefreshToken(userobject);
-        return res
-          .status(200)
-          .cookie("accessToken", accessToken)
-          .json({ success: true });
+
+        user.refreshToken = refreshToken;
+        await user.save();
+
+        res.cookie("accessToken", accessToken, {
+          httpOnly: true,
+          maxAge: 15 * 60 * 1000,
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+
+        return res.status(200).json({
+          success: true,
+          message: "Login successful",
+        });
       } else {
         return res
-          .status(400)
+          .status(401)
           .json({ success: false, message: "Email or password is wrong" });
       }
     } else {
       return res
-        .status(400)
+        .status(401)
         .json({ success: false, message: "Email or password is wrong" });
     }
   } catch (error) {
     console.log("error in loginController");
     return res
-      .status(400)
+      .status(401)
       .json({ success: false, message: "error occur while logging in" });
   }
 };

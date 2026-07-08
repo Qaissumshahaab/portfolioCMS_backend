@@ -1,10 +1,15 @@
 import express from "express";
 import { createBlog } from "../controller/blogController";
-import loginauth from "../middleware/loginauth";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
 import upload from "../middleware/multerupload";
 
 const blogRouter = express.Router();
 
-blogRouter.post("/createblog", loginauth, upload.single("image"), createBlog);
+blogRouter.post(
+  "/createblog",
+  verifyUseraccesstoken,
+  upload.single("image"),
+  createBlog,
+);
 
 export default blogRouter;

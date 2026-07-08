@@ -1,4 +1,5 @@
-import signjwtAccessToken from "../services/jwtSignAccesstoken";
+import signjwtAccessToken from "../utils/jwtSignAccesstoken";
+import signjwtRefreshToken from "../utils/jwtSignRefreshtoken";
 import signup from "../model/signup";
 import bcrypt from "bcrypt";
 
@@ -22,6 +23,7 @@ export const loginUser = async (req, res, next) => {
           email: email,
         };
         const accessToken = signjwtAccessToken(userobject);
+        const refreshToken = signjwtRefreshToken(userobject);
         return res
           .status(200)
           .cookie("accessToken", accessToken)

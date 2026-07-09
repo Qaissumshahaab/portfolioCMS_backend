@@ -64,3 +64,65 @@ export const createSocialLinks = async (req, res) => {
     });
   }
 };
+
+// GET social links for portfolio owner
+export const getSocialLinks = async (req, res) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    const sociallinksData = await sociallinks.findOne({
+      portfolioid: findportfolio._id,
+    });
+    return res.status(200).json({ success: true, data: sociallinksData });
+  } catch (error) {
+    console.log("Error in getSocialLinks");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching social links" });
+  }
+};
+
+// GET social links by portfolio ID (public route)
+export const getSocialLinksByPortfolioId = async (req, res) => {
+  try {
+    const { portfolioid } = req.params;
+    const sociallinksData = await sociallinks.findOne({ portfolioid });
+    return res.status(200).json({ success: true, data: sociallinksData });
+  } catch (error) {
+    console.log("Error in getSocialLinksByPortfolioId");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching social links" });
+  }
+};
+
+// DELETE social links
+export const deleteSocialLinks = async (req, res) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    await sociallinks.findOneAndDelete({ portfolioid: findportfolio._id });
+    return res
+      .status(200)
+      .json({ success: true, message: "Social links deleted successfully" });
+  } catch (error) {
+    console.log("Error in deleteSocialLinks");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error deleting social links" });
+  }
+};

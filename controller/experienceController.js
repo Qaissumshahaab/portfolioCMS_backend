@@ -63,3 +63,65 @@ export const createExperience = async (req, res, next) => {
     });
   }
 };
+
+// GET experience for portfolio owner
+export const getExperience = async (req, res, next) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    const experienceData = await experience.findOne({
+      portfolioid: findportfolio._id,
+    });
+    return res.status(200).json({ success: true, data: experienceData });
+  } catch (error) {
+    console.log("Error in getExperience");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching experience" });
+  }
+};
+
+// GET experience by portfolio ID (public route)
+export const getExperienceByPortfolioId = async (req, res, next) => {
+  try {
+    const { portfolioid } = req.params;
+    const experienceData = await experience.findOne({ portfolioid });
+    return res.status(200).json({ success: true, data: experienceData });
+  } catch (error) {
+    console.log("Error in getExperienceByPortfolioId");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching experience" });
+  }
+};
+
+// DELETE experience
+export const deleteExperience = async (req, res, next) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    await experience.findOneAndDelete({ portfolioid: findportfolio._id });
+    return res
+      .status(200)
+      .json({ success: true, message: "Experience deleted successfully" });
+  } catch (error) {
+    console.log("Error in deleteExperience");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error deleting experience" });
+  }
+};

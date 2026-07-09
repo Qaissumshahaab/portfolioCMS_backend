@@ -59,3 +59,63 @@ export const createProject = async (req, res, next) => {
       .json({ success: false, message: "Error occur while creating project " });
   }
 };
+
+// GET projects for portfolio owner
+export const getProjects = async (req, res, next) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    const projects = await project.find({ portfolioid: findportfolio._id });
+    return res.status(200).json({ success: true, data: projects });
+  } catch (error) {
+    console.log("Error in getProjects");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching projects" });
+  }
+};
+
+// GET projects by portfolio ID (public route)
+export const getProjectsByPortfolioId = async (req, res, next) => {
+  try {
+    const { portfolioid } = req.params;
+    const projects = await project.find({ portfolioid });
+    return res.status(200).json({ success: true, data: projects });
+  } catch (error) {
+    console.log("Error in getProjectsByPortfolioId");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching projects" });
+  }
+};
+
+// DELETE project
+export const deleteProject = async (req, res, next) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    await project.findOneAndDelete({ portfolioid: findportfolio._id });
+    return res
+      .status(200)
+      .json({ success: true, message: "Project deleted successfully" });
+  } catch (error) {
+    console.log("Error in deleteProject");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error deleting project" });
+  }
+};

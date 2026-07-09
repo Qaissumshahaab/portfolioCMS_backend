@@ -52,3 +52,74 @@ export const createAbout = async (req, res, next) => {
       .json({ success: false, message: "Cannot create about section" });
   }
 };
+
+// GET about section for portfolio owner
+export const getAbout = async (req, res, next) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    const aboutData = await about.findOne({ portfolioid: findportfolio._id });
+
+    if (!aboutData) {
+      return res.status(200).json({ success: true, data: null });
+    }
+
+    return res.status(200).json({ success: true, data: aboutData });
+  } catch (error) {
+    console.log("Error in getAbout");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching about section" });
+  }
+};
+
+// GET about section by portfolio ID (public route)
+export const getAboutByPortfolioId = async (req, res, next) => {
+  try {
+    const { portfolioid } = req.params;
+    const aboutData = await about.findOne({ portfolioid });
+
+    if (!aboutData) {
+      return res.status(200).json({ success: true, data: null });
+    }
+
+    return res.status(200).json({ success: true, data: aboutData });
+  } catch (error) {
+    console.log("Error in getAboutByPortfolioId");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching about section" });
+  }
+};
+
+// DELETE about section
+export const deleteAbout = async (req, res, next) => {
+  try {
+    const userid = req.user.userid;
+    const findportfolio = await portfolio.findOne({ userid });
+
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    await about.findOneAndDelete({ portfolioid: findportfolio._id });
+
+    return res
+      .status(200)
+      .json({ success: true, message: "About section deleted successfully" });
+  } catch (error) {
+    console.log("Error in deleteAbout");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error deleting about section" });
+  }
+};

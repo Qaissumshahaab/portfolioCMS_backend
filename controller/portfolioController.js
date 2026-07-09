@@ -27,3 +27,41 @@ export const createPortfolio = async (req, res, next) => {
     });
   }
 };
+
+// GET portfolio for authenticated user
+export const getPortfolio = async (req, res, next) => {
+  try {
+    const userid = req.user?.userid;
+    const portfolioData = await portfolio.findOne({ userid });
+
+    if (!portfolioData) {
+      return res.status(200).json({ success: true, data: null });
+    }
+
+    return res.status(200).json({ success: true, data: portfolioData });
+  } catch (error) {
+    console.log("Error in getPortfolio");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching portfolio" });
+  }
+};
+
+// GET portfolio by user ID (public route)
+export const getPortfolioByUserId = async (req, res, next) => {
+  try {
+    const { userid } = req.params;
+    const portfolioData = await portfolio.findOne({ userid });
+
+    if (!portfolioData) {
+      return res.status(200).json({ success: true, data: null });
+    }
+
+    return res.status(200).json({ success: true, data: portfolioData });
+  } catch (error) {
+    console.log("Error in getPortfolioByUserId");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error fetching portfolio" });
+  }
+};

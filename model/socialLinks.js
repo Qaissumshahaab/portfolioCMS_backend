@@ -14,7 +14,7 @@ const sociallinksSchema = new mongoose.Schema({
     type: String,
   },
   leetcodelink: {
-    ttype: String,
+    type: String,
   },
 });
 

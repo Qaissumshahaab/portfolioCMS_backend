@@ -1,7 +1,14 @@
 import express from "express";
 import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import { getPortfolioAnalytics } from "../controller/dashboardController";
+
 const dashboardRouter = express.Router();
 
-dashboardRouter.post("/dashboard", verifyUseraccesstoken);
+// Get portfolio analytics
+dashboardRouter.get(
+  "/getanalytics",
+  verifyUseraccesstoken,
+  getPortfolioAnalytics,
+);
 
 export default dashboardRouter;

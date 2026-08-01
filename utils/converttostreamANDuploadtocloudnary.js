@@ -1,11 +1,12 @@
-import cloudinary from "../config/cloudinaryconfig";
+import cloudinary from "../config/cloudinaryconfig.js";
 import streamifier from "streamifier";
 
-export default UploadStreamtocloudnary = (imageBuffer) => {
+const UploadStreamtocloudnary = (imageBuffer) => {
   return new Promise((resolve, reject) => {
     const cloudinaryStream = cloudinary.uploader.upload_stream(
       { folder: "portfolioCMS" },
       (error, result) => {
+        
         if (result) {
           resolve(result);
         } else {
@@ -17,3 +18,5 @@ export default UploadStreamtocloudnary = (imageBuffer) => {
     convertfrombuffertostream.pipe(cloudinaryStream);
   });
 };
+
+export default UploadStreamtocloudnary;

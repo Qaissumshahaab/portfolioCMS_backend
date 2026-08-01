@@ -1,7 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
-// Import all routes
+// Importing all routes
 import signupRouter from "./routes/signupRoute.js";
 import loginRouter from "./routes/loginRoute.js";
 import logoutRouter from "./routes/logoutRoute.js";
@@ -21,6 +22,14 @@ import dashboardRouter from "./routes/dashboardRoute.js";
 import clientscontactedRouter from "./routes/clientscontactedRoute.js";
 
 const app = express();
+
+// with cookies attached (accessToken/refreshToken are httpOnly cookies) so credenteial true will allow cookies to be sent with requests from frontend to backend
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

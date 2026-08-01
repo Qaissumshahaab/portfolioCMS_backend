@@ -1,5 +1,5 @@
-import portfolio from "../model/portfolio";
-import skills from "../model/skills";
+import portfolio from "../model/portfolio.js";
+import skills from "../model/skills.js";
 
 export const addSkills = async (req, res, next) => {
   try {

@@ -1,4 +1,4 @@
-import portfolio from "../model/portfolio";
+import portfolio from "../model/portfolio.js";
 
 export const createPortfolio = async (req, res, next) => {
   try {

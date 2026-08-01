@@ -1,5 +1,5 @@
-import experience from "../model/experience";
-import portfolio from "../model/portfolio";
+import experience from "../model/experience.js";
+import portfolio from "../model/portfolio.js";
 
 export const createExperience = async (req, res, next) => {
   try {

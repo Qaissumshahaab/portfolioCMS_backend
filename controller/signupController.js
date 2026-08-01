@@ -1,4 +1,4 @@
-import signup from "../model/signup";
+import signup from "../model/signup.js";
 import bcrypt from "bcrypt";
 
 export const signupUser = async (req, res, next) => {

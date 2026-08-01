@@ -1,5 +1,5 @@
-import visitorsaggregatedanalytics from "../model/visitorsaggregatedanalytics";
-import portfolio from "../model/portfolio";
+import visitorsaggregatedanalytics from "../model/visitorsaggregatedanalytics.js";
+import portfolio from "../model/portfolio.js";
 
 export const getPortfolioAnalytics = async (req, res, next) => {
   try {

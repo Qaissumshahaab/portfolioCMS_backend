@@ -1,5 +1,5 @@
-import sociallinks from "../model/socialLinks";
-import portfolio from "../model/portfolio";
+import sociallinks from "../model/socialLinks.js";
+import portfolio from "../model/portfolio.js";
 
 export const createSocialLinks = async (req, res) => {
   try {

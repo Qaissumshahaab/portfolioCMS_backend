@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import portfolio from "../model/portfolio";
+import portfolio from "../model/portfolio.js";
 import {
   sendemailtoportfolioOwner,
   returnconfirmationEmail,
-} from "../services/emailService";
-import clientscontacted from "../model/clientscontacted";
-import signup from "../model/signup";
+} from "../services/emailService.js";
+import clientscontacted from "../model/clientscontacted.js";
+import signup from "../model/signup.js";
 
 export const sendemailfromForm = async (req, res) => {
   try {

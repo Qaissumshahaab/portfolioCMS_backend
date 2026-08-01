@@ -1,5 +1,5 @@
-import about from "../model/about";
-import portfolio from "../model/portfolio";
+import about from "../model/about.js";
+import portfolio from "../model/portfolio.js";
 
 export const createAbout = async (req, res, next) => {
   try {

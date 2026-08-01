@@ -1,6 +1,6 @@
-import blog from "../model/blog";
-import portfolio from "../model/portfolio";
-import UploadStreamtocloudnary from "../utils/converttostreamANDuploadtocloudnary";
+import blog from "../model/blog.js";
+import portfolio from "../model/portfolio.js";
+import UploadStreamtocloudnary from "../utils/converttostreamANDuploadtocloudnary.js";
 
 export const createBlog = async (req, res, next) => {
   try {
@@ -112,6 +112,63 @@ export const getBlogById = async (req, res, next) => {
     return res
       .status(400)
       .json({ success: false, message: "Error fetching blog" });
+  }
+};
+
+// UPDATE blog : title/content/tags always replace what is stored
+// image is only uploaded (and replaces the old one) if a file is provided.
+export const updateBlog = async (req, res, next) => {
+  try {
+    const { blogid, title, content, tags } = req.body;
+    const coverImage = req.file?.buffer;
+    const userid = req.user.userid;
+
+    if (!blogid) {
+      return res
+        .status(400)
+        .json({ success: false, message: "blogid is required" });
+    }
+
+    const findportfolio = await portfolio.findOne({ userid });
+    if (!findportfolio) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Portfolio not found" });
+    }
+
+    const blogData = await blog.findOne({
+      _id: blogid,
+      portfolioid: findportfolio._id,
+    });
+    if (!blogData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
+    }
+
+    const updatedata = {};
+    if (title) updatedata.title = title;
+    if (content) updatedata.content = content;
+    if (tags) updatedata.tags = [...new Set(tags)];
+
+    if (coverImage) {
+      const resultafteruploadtocloudnary =
+        await UploadStreamtocloudnary(coverImage);
+      updatedata.coverImage = {
+        secure_url: resultafteruploadtocloudnary.secure_url,
+        public_id: resultafteruploadtocloudnary.public_id,
+      };
+    }
+
+    await blog.findByIdAndUpdate(blogid, updatedata, { new: true });
+    return res
+      .status(200)
+      .json({ success: true, message: "Blog updated successfully" });
+  } catch (error) {
+    console.log("Error in updateBlog");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error updating blog" });
   }
 };
 

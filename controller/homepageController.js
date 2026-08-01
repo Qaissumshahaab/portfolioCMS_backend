@@ -1,6 +1,6 @@
-import homepage from "../model/homepage";
-import portfolio from "../model/portfolio";
-import UploadStreamtocloudnary from "../utils/converttostreamANDuploadtocloudnary";
+import homepage from "../model/homepage.js";
+import portfolio from "../model/portfolio.js";
+import UploadStreamtocloudnary from "../utils/converttostreamANDuploadtocloudnary.js";
 
 export const createHomepage = async (req, res, next) => {
   try {

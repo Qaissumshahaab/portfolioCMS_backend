@@ -1,6 +1,6 @@
-import signjwtAccessToken from "../utils/jwtSignAccesstoken";
-import signjwtRefreshToken from "../utils/jwtSignRefreshtoken";
-import signup from "../model/signup";
+import signjwtAccessToken from "../utils/jwtSignAccesstoken.js";
+import signjwtRefreshToken from "../utils/jwtSignRefreshtoken.js";
+import signup from "../model/signup.js";
 import bcrypt from "bcrypt";
 
 export const loginUser = async (req, res, next) => {

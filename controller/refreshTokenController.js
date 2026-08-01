@@ -1,7 +1,7 @@
-import signup from "../model/signup";
+import signup from "../model/signup.js";
 import jwt from "jsonwebtoken";
-import signjwtAccessToken from "../utils/jwtSignAccesstoken";
-import signjwtRefreshToken from "../utils/jwtSignRefreshtoken";
+import signjwtAccessToken from "../utils/jwtSignAccesstoken.js";
+import signjwtRefreshToken from "../utils/jwtSignRefreshtoken.js";
 
 export const validaterefreshToken = async (req, res, next) => {
   try {

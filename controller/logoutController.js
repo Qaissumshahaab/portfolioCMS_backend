@@ -1,4 +1,4 @@
-import signup from "../model/signup";
+import signup from "../model/signup.js";
 
 export const logoutUser = async (req, res) => {
   try {

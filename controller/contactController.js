@@ -1,5 +1,5 @@
-import contact from "../model/contact";
-import portfolio from "../model/portfolio";
+import contact from "../model/contact.js";
+import portfolio from "../model/portfolio.js";
 
 export const createContact = async (req, res, next) => {
   try {

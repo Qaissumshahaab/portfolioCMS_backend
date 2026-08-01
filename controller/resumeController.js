@@ -1,6 +1,6 @@
-import resume from "../model/resume";
-import portfolio from "../model/portfolio";
-import UploadStreamtocloudnary from "../utils/converttostreamANDuploadtocloudnary";
+import resume from "../model/resume.js";
+import portfolio from "../model/portfolio.js";
+import UploadStreamtocloudnary from "../utils/converttostreamANDuploadtocloudnary.js";
 
 export const uploadResume = async (req, res) => {
   try {
@@ -59,7 +59,7 @@ export const uploadResume = async (req, res) => {
       message: "Resume updated successfully",
     });
   } catch (error) {
-    console.error("error occur in resumeController" + error);
+    console.error("error occur in resumeController", error);
 
     return res.status(500).json({
       success: false,

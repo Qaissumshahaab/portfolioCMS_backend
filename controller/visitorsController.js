@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import geoip from "geoip-lite";
 
-import visitor from "../model/peruniquevisitors";
-import visitorsaggregatedanalytics from "../model/visitorsaggregatedanalytics";
+import visitor from "../model/peruniquevisitors.js";
+import visitorsaggregatedanalytics from "../model/visitorsaggregatedanalytics.js";
 
 export const visitPortfolio = async (req, res, next) => {
   try {

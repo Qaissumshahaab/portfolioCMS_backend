@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const sociallinksSchema = new mongoose.Schema({
+  portfolioid: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Portfolio",
+  },
   facebooklink: {
     type: String,
   },

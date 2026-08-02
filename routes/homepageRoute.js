@@ -1,12 +1,12 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
-import upload from "../middleware/multerupload";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
+import upload from "../middleware/multerupload.js";
 import {
   createHomepage,
   getHomepage,
   getHomepageByPortfolioId,
   deleteHomepage,
-} from "../controller/homepageController";
+} from "../controller/homepageController.js";
 
 const homepageRouter = express.Router();
 

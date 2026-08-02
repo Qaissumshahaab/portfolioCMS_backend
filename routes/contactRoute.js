@@ -1,11 +1,11 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
 import {
   createContact,
   getContact,
   getContactByPortfolioId,
   deleteContact,
-} from "../controller/contactController";
+} from "../controller/contactController.js";
 
 const contactRouter = express.Router();
 

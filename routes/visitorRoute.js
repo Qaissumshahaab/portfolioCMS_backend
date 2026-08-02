@@ -22,7 +22,7 @@
  */
 
 import express from "express";
-import { visitPortfolio } from "../controller/visitorsController";
+import { visitPortfolio } from "../controller/visitorsController.js";
 
 const visitorRouter = express.Router();
 

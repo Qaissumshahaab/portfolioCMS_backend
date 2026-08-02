@@ -1,12 +1,12 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
-import upload from "../middleware/multerupload";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
+import upload from "../middleware/multerupload.js";
 import {
   uploadResume,
   getResume,
   getResumeByPortfolioId,
   deleteResume,
-} from "../controller/resumeController";
+} from "../controller/resumeController.js";
 
 const resumeRouter = express.Router();
 

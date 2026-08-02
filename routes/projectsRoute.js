@@ -1,15 +1,17 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
 import {
   createProject,
+  updateProject,
   getProjects,
   getProjectsByPortfolioId,
   deleteProject,
-} from "../controller/projectsController";
+} from "../controller/projectsController.js";
 
 const projectsRouter = express.Router();
 
 projectsRouter.post("/createproject", verifyUseraccesstoken, createProject);
+projectsRouter.post("/updateproject", verifyUseraccesstoken, updateProject);
 projectsRouter.get("/getprojects", verifyUseraccesstoken, getProjects);
 projectsRouter.get("/getprojects/:portfolioid", getProjectsByPortfolioId);
 projectsRouter.post("/deleteproject", verifyUseraccesstoken, deleteProject);

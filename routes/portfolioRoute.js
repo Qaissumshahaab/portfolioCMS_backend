@@ -1,10 +1,10 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
 import {
   createPortfolio,
   getPortfolio,
   getPortfolioByUserId,
-} from "../controller/portfolioController";
+} from "../controller/portfolioController.js";
 
 const portfolioRouter = express.Router();
 

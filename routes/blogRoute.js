@@ -1,14 +1,15 @@
 import express from "express";
 import {
   createBlog,
+  updateBlog,
   getBlogs,
   getBlogsByPortfolioId,
   getBlogById,
   deleteBlog,
   publishBlog,
-} from "../controller/blogController";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
-import upload from "../middleware/multerupload";
+} from "../controller/blogController.js";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
+import upload from "../middleware/multerupload.js";
 
 const blogRouter = express.Router();
 
@@ -18,6 +19,14 @@ blogRouter.post(
   verifyUseraccesstoken,
   upload.single("image"),
   createBlog,
+);
+
+// Update blog (cover image optional - keeps existing image if none is sent)
+blogRouter.post(
+  "/updateblog",
+  verifyUseraccesstoken,
+  upload.single("image"),
+  updateBlog,
 );
 
 // Get all blogs for authenticated user

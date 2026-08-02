@@ -1,11 +1,11 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
 import {
   createSocialLinks,
   getSocialLinks,
   getSocialLinksByPortfolioId,
   deleteSocialLinks,
-} from "../controller/sociallinksController";
+} from "../controller/sociallinksController.js";
 
 const sociallinksRouter = express.Router();
 

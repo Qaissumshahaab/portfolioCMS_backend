@@ -1,11 +1,11 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
 import {
   addSkills,
   getSkills,
   getSkillsByPortfolioId,
   deleteSkills,
-} from "../controller/skillController";
+} from "../controller/skillController.js";
 
 const skillsRouter = express.Router();
 

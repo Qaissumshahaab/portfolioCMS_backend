@@ -1,11 +1,11 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
 import {
   createAbout,
   getAbout,
   getAboutByPortfolioId,
   deleteAbout,
-} from "../controller/aboutController";
+} from "../controller/aboutController.js";
 
 const aboutRouter = express.Router();
 

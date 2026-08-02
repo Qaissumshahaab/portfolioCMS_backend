@@ -1,11 +1,11 @@
 import express from "express";
-import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken";
+import verifyUseraccesstoken from "../middleware/verifyUseraccesstoken.js";
 import {
   createExperience,
   getExperience,
   getExperienceByPortfolioId,
   deleteExperience,
-} from "../controller/experienceController";
+} from "../controller/experienceController.js";
 
 const experienceRouter = express.Router();
 

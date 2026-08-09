@@ -31,11 +31,17 @@ export const loginUser = async (req, res, next) => {
         res.cookie("accessToken", accessToken, {
           httpOnly: true,
           maxAge: 15 * 60 * 1000,
+          secure: true, //comment them when testing locally and uncomment them when deploying to production with https
+          sameSite: "none", //comment them when testing locally and uncomment them when deploying to production on different domain
+          path: "/",
         });
 
         res.cookie("refreshToken", refreshToken, {
           httpOnly: true,
           maxAge: 7 * 24 * 60 * 60 * 1000,
+          secure: true,
+          sameSite: "none",
+          path: "/",
         });
 
         return res.status(200).json({

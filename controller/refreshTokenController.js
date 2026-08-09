@@ -29,11 +29,17 @@ export const validaterefreshToken = async (req, res, next) => {
       res.cookie("accessToken", generateaccessToken, {
         httpOnly: true,
         maxAge: 15 * 60 * 1000,
+        secure: true,
+        sameSite: "none",
+        path: "/",
       });
 
       res.cookie("refreshToken", generaterefreshToken, {
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: true,
+        sameSite: "none",
+        path: "/",
       });
 
       return res.status(200).json({
